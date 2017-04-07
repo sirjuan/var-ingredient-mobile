@@ -5,13 +5,15 @@ import {
   REMOVE_INGREDIENT,
   CLEAR_INPUT,
   REQUEST_RECIPES,
-  RECEIVE_RECIPES
+  RECEIVE_RECIPES,
+  ALL_INGREDIENTS
 } from '../actions/ingredients'
 
 export const ingredients = (state = {
   list: [],
   found: [],
   input: '',
+  all: []
 }, action) => {
   switch (action.type) {
     case CLEAR_INPUT:
@@ -34,10 +36,15 @@ export const ingredients = (state = {
         ...state,
         found: action.ingredients,
       }
-      case CHANGE_INPUT:
-        return {
-          ...state,
-          input: action.input,
+    case ALL_INGREDIENTS:
+      return {
+        ...state,
+        all: action.ingredients,
+      }
+    case CHANGE_INPUT:
+      return {
+        ...state,
+        input: action.input,
       }
     default:
       return state

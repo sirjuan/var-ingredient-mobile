@@ -5,11 +5,13 @@ import Home from '../containers/Home'
 import AllRecipes from '../containers/AllRecipes'
 import SubmitRecipe from '../containers/SubmitRecipe'
 import Ingredients from '../containers/Ingredients'
+import WizardForm from '../containers/WizardForm/WizardForm'
 
 export const AppNavigator = TabNavigator({
     Search: {screen: Ingredients},
-    All: { screen: AllRecipes },
+    All: { screen: WizardForm },
     Submit: { screen: SubmitRecipe },
+    Home: { screen: Home },
   },
   {
     tabBarOptions: {

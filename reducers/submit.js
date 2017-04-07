@@ -8,12 +8,12 @@ const submitRecipe = (state = {}, action) => {
     case TAKE_PICTURE:
     return {
       ...state,
-      localImage: action.uri
+      imageUri: action.uri
     }
     case UPLOAD_PICTURE:
     return {
       ...state,
-      databaseId: action.id
+      cloudinaryId: action.id
     }
     case RECEIVE_SUBMIT:
     return {

@@ -3,6 +3,7 @@ import { View, ScrollView, Image } from 'react-native';
 // Import redux stuff
 import { connect } from 'react-redux'
 import { searchByIngredient, fetchPostsIfNeeded, invalidateRecipe } from '../actions/old'
+import { fetchIngredients } from '../actions/ingredients'
 // Import components
 import IngredientList from '../components/IngredientList';
 import ListRecipes from '../components/ListRecipes';
@@ -26,6 +27,7 @@ class Home extends React.Component {
   componentDidMount() {
     const { dispatch, searchRecipe } = this.props
     dispatch(fetchPostsIfNeeded(searchRecipe))
+    dispatch(fetchIngredients())
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.searchRecipe !== this.props.searchRecipe) {

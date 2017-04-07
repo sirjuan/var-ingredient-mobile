@@ -4,6 +4,7 @@ import { ingredients, recipesByIngredients} from './ingredients'
 import { postsByRecipe, searchRecipe, postsByPagination,} from './old'
 import nav from './nav'
 import submit from './submit'
+import { wizardPage } from '../containers/WizardForm/WizardForm'
 
 const submitRecipe = (state = {}, action) => {
   switch (action.type) {
@@ -41,7 +42,8 @@ const rootReducer = combineReducers({
   form,
   submit,
   ingredients,
-  recipesByIngredients
+  recipesByIngredients,
+  wizardPage
 })
 
 export default rootReducer

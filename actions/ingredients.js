@@ -5,6 +5,7 @@ export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
 export const CLEAR_INPUT = 'CLEAR_INPUT'
 export const REQUEST_RECIPES = 'REQUEST_RECIPES'
 export const RECEIVE_RECIPES = 'RECEIVE_RECIPES'
+export const ALL_INGREDIENTS = 'ALL_INGREDIENTS'
 
 export const addIngredient = ingredient => ({
   type: ADD_INGREDIENT,
@@ -17,6 +18,10 @@ export const removeIngredient = ingredient => ({
 const find = (ingredients, input) => ({
   type: FOUND_INGREDIENTS,
   ingredients, input
+})
+const all = (ingredients) => ({
+  type: ALL_INGREDIENTS,
+  ingredients
 })
 const changeInput = input => ({
   type: CHANGE_INPUT,
@@ -38,6 +43,12 @@ export const searchIngredient = input => dispatch => {
   return fetch(`https://var-ingredient.joehub.fi/api/ingredients?ingredient=${input}`)
     .then(response => response.json())
     .then(json => dispatch(find(json.ingredients)))
+    .catch(error => console.log(error))
+}
+export const fetchIngredients = () => dispatch => {
+  return fetch(`https://var-ingredient.joehub.fi/api/ingredients`)
+    .then(response => response.json())
+    .then(json => dispatch(all(json.ingredients)))
     .catch(error => console.log(error))
 }
 const fetchRecipes = () => (dispatch, getState) => {
