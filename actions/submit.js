@@ -1,3 +1,5 @@
+import Expo from 'expo';
+import React from 'react'
 export const REQUEST_SUBMIT = 'REQUEST_SUBMIT'
 export const RECEIVE_SUBMIT = 'RECEIVE_SUBMIT'
 export const TAKE_PICTURE = 'TAKE_PICTURE'
