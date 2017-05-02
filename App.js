@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import reducer from './reducers/reducers'
+import reducer from './reducers'
 
 const middleware = [ thunk ]
 
@@ -21,6 +21,7 @@ export default class App extends React.Component {
     this.state = { isReady: false, };
   }
   async componentWillMount() {
+
     await Expo.Font.loadAsync({
         'Roboto': require('native-base/Fonts/Roboto.ttf'),
         'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),

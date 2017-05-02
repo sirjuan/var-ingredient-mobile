@@ -1,76 +1,71 @@
-import React, { PropTypes } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native';
-import { Button, Container, Content, Header, Icon, Text, Item, Input,  List, ListItem, H3, Right, Footer, FooterTab
- } from 'native-base'
+import React from 'react'
+import { View } from 'react-native'
+import { Container, Content } from 'native-base'
 // Import redux stuff
 import { connect } from 'react-redux'
-import { searchIngredient, addIngredient, removeIngredient, clearInput, fetchRecipesIfNeeded } from '../actions/ingredients'
+import { toggleSearch, fetchRecipes } from '../actions/ingredients'
+
+import { addIngredient, removeUserIngredient, postUserIngredient } from '../actions/session'
 // Import components
-import styles from '../styles/styles'
 import Logo from '../components/Logo'
 import RecipeList from '../components/RecipeList'
-import ListFoundIngredients from '../components/ListFoundIngredients'
+import RecipeModal from '../components/Recipe/RecipeModal'
+import ListCategories from '../components/ListCategories'
 import ListOwnIngredients from '../components/ListOwnIngredients'
 import SearchBarIngredients from '../components/SearchBarIngredients'
 
- const Ingredients = props => {
-  const { found, list, dispatch, input, recipes } = props
 
-  handleChange = i => {
-    dispatch(searchIngredient(i))
+ const Ingredients = props => {
+  const { userIngredients, dispatch, recipes, categories, open, appNav } = props
+
+  add = i => dispatch(postUserIngredient(i))
+
+  remove = i => {
+    dispatch(removeUserIngredient(i))
+    dispatch(fetchRecipes())
   }
-  add = (i) => {
-    dispatch(addIngredient(i))
-    dispatch(fetchRecipesIfNeeded())
+
+  const toggle = () => {
+    dispatch(toggleSearch())
+    dispatch(fetchRecipes())
   }
-  remove = (i) => {
-    dispatch(removeIngredient(i))
-    dispatch(fetchRecipesIfNeeded())
-  }
-  clear = () => {
-    dispatch(clearInput())
-  }
-  searchRecipes = () => {
-    dispatch(fetchRecipesIfNeeded())
-  }
+
   return (
     <Container style={{backgroundColor: 'rgba(30,30,30,1)',}}>
+      <RecipeModal />
       <SearchBarIngredients
-        input={input}
-        clear={this.clear}
-        onChange = {(i) => this.handleChange(i) }
+        open={open}
+        toggle={toggle}
       />
       <Content>
-        { input.length === 0 && list.length === 0 && <Logo /> }
-        { input.length > 0 &&
-          <ListFoundIngredients
-            ingredients={found}
-            list={list}
-            add={(ingredient) => this.add(ingredient)}
-            remove={(ingredient) => this.remove(ingredient)}
-          /> }
-        { input.length === 0 && list.length > 0 &&
+        { !open && !userIngredients.length && <Logo /> }
+        { open
+          ?
+          <ListCategories
+            categories={categories}
+            userIngredients={userIngredients}
+            add={(i) => this.add(i)}
+            remove={(i) => this.remove(i)} />
+          :
           <View>
             <ListOwnIngredients
-              ownIngredients = {list}
+              userIngredients = {userIngredients}
               remove={(ingredient) => this.remove(ingredient)}
             />
-            <RecipeList recipes={recipes} />
-          </View>
-        }
+            <RecipeList recipes={recipes} dispatch={dispatch} navigation={appNav}/>
+          </View> }
       </Content>
     </Container>
   );
 }
 
 const mapStateToProps = state => {
-  const { ingredients, recipesByIngredients } = state
-  const { found, list, input } = ingredients
-  const { items: recipes } = recipesByIngredients[list] || {
-    isFetching: true,
-    items: []
-  }
-  return { found, list, input, recipes}
+  const { status, session, recipeReducer, ingredientsByCategory, appNav } = state
+  const { categories } = status
+  const { open } = ingredientsByCategory
+  const { ingredients: userIngredients } = session
+  const { recipes } = recipeReducer
+  return { userIngredients, recipes, categories, open}
 }
 
 export default connect(mapStateToProps)(Ingredients)

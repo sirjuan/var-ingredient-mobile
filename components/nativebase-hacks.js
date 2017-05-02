@@ -1,18 +1,26 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Button, Container, Content, Footer, FooterTab, Picker, Input } from 'native-base'
+import { Button, Container, Content, Footer, FooterTab, Picker, Input, Item, Label } from 'native-base'
 
-export const DarkContainer = ({children, style, ...props}) => {
+export const DarkContainer = ({children, iStyle, ...props}) => {
+  const containerStyle = {
+    backgroundColor: 'rgba(30,30,30,1)',
+    ...iStyle
+  }
   return (
-    <Container {...props} style={{backgroundColor: 'rgba(30,30,30,1)'}} >
+    <Container {...props} style={containerStyle} >
       {children}
     </Container>
   );
 }
 
 export const MyContent = ({children, style, ...props}) => {
+  const contentStyle = {
+    padding: 10,
+    ...style
+  }
   return (
-    <Content {...props} style={{padding: 10 }} >
+    <Content {...props} style={contentStyle} >
       {children}
     </Content>
   );
@@ -29,12 +37,27 @@ export const MyPicker = ({children, style, ...props}) => {
   );
 }
 
-export const MyInput = ({children, style, ...props}) => {
-  return (
+export const MyInput = ({children, inputStyle, ...props}) => {
+  const componentStyle = {
 
-      <Input {...props} style={{backgroundColor: 'rgba(50,50,50,0.5)', color: 'white'}} >
-        {children}
-      </Input>
+      ...inputStyle,
+  }
+  console.log(componentStyle)
+  const {label, error, touched} = props
+  return (
+    <Item floatingLabel last style={componentStyle}>
+        {touched && error
+          ? <Label style={{color: 'red'}}>{label}</Label>
+          : <Label style={{color: 'white'}}>{label}</Label>}
+        <Input style={{backgroundColor: 'rgba(50,50,50,0.5)',color: 'white'}} {...props}  >
+          {children}
+        </Input>
+    </Item>
+
+
+
+
+
   );
 }
 

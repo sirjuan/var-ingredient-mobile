@@ -1,7 +1,4 @@
-import {
-  REQUEST_SUBMIT, RECEIVE_SUBMIT,
-  TAKE_PICTURE, UPLOAD_PICTURE,
-} from '../actions/submit'
+import { REQUEST_SUBMIT, RECEIVE_SUBMIT, TAKE_PICTURE } from '../actions/submit'
 
 const submitRecipe = (state = {}, action) => {
   switch (action.type) {
@@ -9,11 +6,6 @@ const submitRecipe = (state = {}, action) => {
     return {
       ...state,
       imageUri: action.uri
-    }
-    case UPLOAD_PICTURE:
-    return {
-      ...state,
-      cloudinaryId: action.id
     }
     case RECEIVE_SUBMIT:
     return {

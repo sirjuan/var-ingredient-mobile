@@ -9,6 +9,6 @@ const Logo = () => (
         resizeMode={Image.resizeMode.contain}
         style={{flex: 1, width: '80%'}} />
   </View>
-);
+)
 
 export default Logo;

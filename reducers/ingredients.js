@@ -1,83 +1,55 @@
-import {
-  FOUND_INGREDIENTS,
-  CHANGE_INPUT,
-  ADD_INGREDIENT,
-  REMOVE_INGREDIENT,
-  CLEAR_INPUT,
-  REQUEST_RECIPES,
-  RECEIVE_RECIPES,
-  ALL_INGREDIENTS
-} from '../actions/ingredients'
+import { ALL_INGREDIENTS, CATEGORIES, INGREDIENTS_BY_CATEGORY, TOGGLE_CATEGORY, TOGGLE_SEARCH }
+from '../actions/ingredients'
 
-export const ingredients = (state = {
-  list: [],
-  found: [],
-  input: '',
-  all: []
-}, action) => {
+export const status = (state = { all: [], categories: [], ingredients: []}, action) => {
   switch (action.type) {
-    case CLEAR_INPUT:
-      return {
-        ...state,
-        input: ''
-      }
-    case ADD_INGREDIENT:
-      return {
-        ...state,
-        list: state.list.concat(action.ingredient)
-      }
-    case REMOVE_INGREDIENT:
-      return {
-        ...state,
-        list: state.list.filter(ingredient => (ingredient !== action.ingredient))
-      }
-    case FOUND_INGREDIENTS:
-      return {
-        ...state,
-        found: action.ingredients,
-      }
     case ALL_INGREDIENTS:
       return {
         ...state,
-        all: action.ingredients,
+        ingredients: action.ingredients,
       }
-    case CHANGE_INPUT:
+    case CATEGORIES:
       return {
         ...state,
-        input: action.input,
-      }
-    default:
-      return state
-  }
-}
-const recipes = (state = {
-  isFetching: false,
-  items: [],
-}, action) => {
-  switch (action.type) {
-    case REQUEST_RECIPES:
-      return {
-        ...state,
-        isFetching: true,
-        didInvalidate: false
-      }
-    case RECEIVE_RECIPES:
-      return {
-        ...state,
-        isFetching: false,
-        items: action.recipes.recipes,
+        categories: action.categories,
       }
     default:
       return state
   }
 }
-export const recipesByIngredients = (state = {}, action) => {
+
+export const ingredientsByCategory= (state = { open: false }, action) => {
   switch (action.type) {
-    case RECEIVE_RECIPES:
-    case REQUEST_RECIPES:
+    case INGREDIENTS_BY_CATEGORY:
       return {
         ...state,
-        [action.ingredientList]: recipes(state[action.ingredientList], action)
+        [action.category]: ingredients(state[action.category], action)
+      }
+    case TOGGLE_CATEGORY:
+      return {
+        ...state,
+        [action.category]: ingredients(state[action.category], action)
+      }
+    case TOGGLE_SEARCH:
+      return {
+        ...state, open: !state.open
+      }
+    default:
+      return state
+  }
+}
+
+const ingredients = (state = { open: false }, action) => {
+  switch (action.type) {
+    case INGREDIENTS_BY_CATEGORY:
+      return {
+        ...state,
+        items: action.ingredients
+      }
+    case TOGGLE_CATEGORY:
+      return {
+        ...state,
+        open: !state.open
       }
     default:
       return state

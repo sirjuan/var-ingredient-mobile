@@ -1,74 +1,81 @@
-export const FOUND_INGREDIENTS = 'FOUND_INGREDIENTS'
-export const CHANGE_INPUT = 'CHANGE_INPUT'
-export const ADD_INGREDIENT = 'ADD_INGREDIENT'
-export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
-export const CLEAR_INPUT = 'CLEAR_INPUT'
+import { getHeaders } from './headers'
+import axios from 'axios'
+
 export const REQUEST_RECIPES = 'REQUEST_RECIPES'
 export const RECEIVE_RECIPES = 'RECEIVE_RECIPES'
-export const ALL_INGREDIENTS = 'ALL_INGREDIENTS'
 
-export const addIngredient = ingredient => ({
-  type: ADD_INGREDIENT,
-  ingredient
-})
-export const removeIngredient = ingredient => ({
-  type: REMOVE_INGREDIENT,
-  ingredient
-})
-const find = (ingredients, input) => ({
-  type: FOUND_INGREDIENTS,
-  ingredients, input
-})
+export const ALL_INGREDIENTS = 'ALL_INGREDIENTS'
+export const INGREDIENTS_BY_CATEGORY = 'INGREDIENTS_BY_CATEGORY'
+export const CATEGORIES = 'CATEGORIES'
+export const TOGGLE_CATEGORY = 'TOGGLE_CATEGORY'
+export const TOGGLE_SEARCH = 'TOGGLE_SEARCH'
+
 const all = (ingredients) => ({
   type: ALL_INGREDIENTS,
   ingredients
 })
-const changeInput = input => ({
-  type: CHANGE_INPUT,
-  input
-})
-export const clearInput = () => ({
-  type: CLEAR_INPUT
-})
-const requestRecipes = (ingredientList) => ({
+const requestRecipes = () => ({
   type: REQUEST_RECIPES,
-  ingredientList
 })
-const receiveRecipes = (ingredientList, recipes) => ({
+const receiveRecipes = (recipes) => ({
   type: RECEIVE_RECIPES,
-  ingredientList, recipes
+  recipes
 })
-export const searchIngredient = input => dispatch => {
-  dispatch(changeInput(input))
-  return fetch(`https://var-ingredient.joehub.fi/api/ingredients?ingredient=${input}`)
+const getIngredientsByCategory = (ingredients, category) => ({
+  type: INGREDIENTS_BY_CATEGORY,
+  ingredients, category
+})
+const getCategories = (categories) => ({
+  type: CATEGORIES,
+  categories
+})
+
+export const toggleCategory = (category) => ({
+  type: TOGGLE_CATEGORY,
+  category
+})
+
+export const toggleSearch = () => ({
+  type: TOGGLE_SEARCH
+})
+
+const host_url = 'https://var-ingredient.joehub.fi/api';
+
+export const fetchCategories = () => (dispatch, getState) => {
+  return fetch(`${host_url}/categories`)
     .then(response => response.json())
-    .then(json => dispatch(find(json.ingredients)))
+    .then(json => {
+      console.log(json.categories)
+      dispatch(getCategories(json.categories))
+    })
     .catch(error => console.log(error))
 }
-export const fetchIngredients = () => dispatch => {
-  return fetch(`https://var-ingredient.joehub.fi/api/ingredients`)
+
+export const fetchIngredientsByCategory = (category) => (dispatch, getState) => {
+  return fetch(`${host_url}/category/${category._id}/ingredients`)
+    .then(response => response.json())
+    .then(json => {
+      console.log(json)
+      dispatch(getIngredientsByCategory(json.ingredients, category.name))
+    })
+    .catch(error => console.log(error))
+}
+
+export const fetchIngredients = () => (dispatch, getState) => {
+  return fetch(`${host_url}/ingredients`)
     .then(response => response.json())
     .then(json => dispatch(all(json.ingredients)))
     .catch(error => console.log(error))
 }
-const fetchRecipes = () => (dispatch, getState) => {
-  dispatch(requestRecipes())
-  const ingredientList = getState().ingredients.list
-  const searchString = ingredientList.join(',')
-  console.log(searchString)
-  return fetch(`https://var-ingredient.joehub.fi/api/recipe?ingredients=${searchString}`)
-    .then(response => response.json())
-    .then(json => dispatch(receiveRecipes(ingredientList, json)))
-    .catch(error => console.log(error))
-}
-const shouldFetchRecipes = () => (dispatch, getState) => {
-  const state = getState()
-  const recipes = state.recipesByIngredients[state.ingredients.list]
-  return !recipes || !recipes.isFetching
-}
 
-export const fetchRecipesIfNeeded = () => (dispatch, getState) => {
-  if (shouldFetchRecipes()) {
-    return dispatch(fetchRecipes())
-  }
+export const fetchRecipes = () => (dispatch, getState) => {
+  dispatch(requestRecipes())
+  const { ingredients } = getState().session
+  const nameList = []
+  ingredients.length && ingredients.map(i => nameList.push(i.name))
+  const searchString = nameList.join(',')
+  const url = `${host_url}/recipe?ingredients=${searchString}`
+  return axios(url)
+    .then(response => dispatch(receiveRecipes(response.data.recipes)))
+    .catch(error => console.log(error))
 }
