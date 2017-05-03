@@ -1,6 +1,6 @@
-import { LOG_IN, LOG_OUT, LOGGING, LOGIN_FAIL, ADD_INGREDIENT, REMOVE_INGREDIENT } from '../actions/session'
+import { LOG_IN, LOG_OUT, LOGGING, LOGIN_FAIL, ADD_INGREDIENT, REMOVE_INGREDIENT, SIGNING_UP, SIGNED_UP } from '../actions/session'
 
-const session = (state = {token: null, ingredients: []}, action) => {
+const session = (state = {token: null, ingredients: [], signingUp: false, signedUp: false}, action) => {
   switch (action.type) {
     case LOGGING:
     return {
@@ -18,6 +18,17 @@ const session = (state = {token: null, ingredients: []}, action) => {
     return {
       ...state,
       token: null,
+    }
+    case SIGNING_UP:
+    return {
+      ...state,
+      signingUp: true,
+    }
+    case SIGNED_UP:
+    return {
+      ...state,
+      signingUp: false,
+      signedUp: true,
     }
     case LOGIN_FAIL:
     return {

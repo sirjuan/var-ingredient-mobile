@@ -50,9 +50,13 @@ export const userLogin = () => (dispatch, getState) => {
 
 export const fLogin = (id) => (dispatch, getState) => {
   dispatch(loggingIn())
-  const url = host_url + '/auth/facelogin'
+  const url = host_url + '/auth/facebook/login'
+  console.log(url)
   axios.post(url, { id: id })
-    .then((response) => dispatch(startUp(response.data.user)))
+    .then((response) => {
+      console.log(response)
+      dispatch(startUp(response.data.user))
+    })
     .then(() => dispatch(_setToken()))
     .catch((error) => {
       console.log('userLogin error: ' + error.message)

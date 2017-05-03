@@ -1,4 +1,5 @@
 import   React from 'react'
+import { View } from 'react-native'
 import { Field, reduxForm } from 'redux-form'
 import { userSignup } from '../../actions/session'
 import { connect } from 'react-redux'
@@ -10,20 +11,23 @@ import validate from './validate'
 
 const SignUpPage = props => {
 
-  const { handleSubmit, isLogging, dispatch } = props
+  const { handleSubmit, signingUp, signedUp, dispatch } = props
 
   const signUp = () => (dispatch(userSignup()))
 
   return (
     <DarkContainer>
       <MyContent>
-          <H1 style={{alignSelf: 'center',}}>Sign Up</H1>
+      { signedUp
+        ? <H1>Thank you for signing up!</H1>
+        : <View><H1 style={{alignSelf: 'center',}}>Sign Up</H1>
           <Field name="email" type='email' label="E-Mail" component={renderInput} />
-          <Field name="password" secureTextEntry={true} type="password" label="Password" component={renderInput} />
-      </MyContent>
+          <Field name="password" secureTextEntry={true} type="password" label="Password" component={renderInput} /></View>
+       }
+       </MyContent>
       <Footer>
         <FooterTab>
-          { isLogging ? <Button disabled><MyText>Signing up... </MyText><Spinner /></Button>
+          { signingUp ? <Button disabled><MyText>Signing up... </MyText><Spinner /></Button>
                       : <Button success onPress={handleSubmit(signUp)}><H2>SIGN UP</H2></Button> }
         </FooterTab>
       </Footer>
@@ -32,8 +36,8 @@ const SignUpPage = props => {
 }
 
 const mapStateToProps = state => {
-  const { isLogging } = state.session
-  return { isLogging }
+  const { signingUp, signedUp } = state.session
+  return { signingUp, signedUp }
 }
 
 const SignUpPageDecorated = reduxForm({ form: 'login', validate })(SignUpPage)
