@@ -1,6 +1,6 @@
 import React from 'react'
 import { AsyncStorage } from 'react-native'
-import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-navigation';
+import { addNavigationHelpers, TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux'
 import SubmitRecipe from '../containers/SubmitRecipe'
 import Ingredients from '../containers/Ingredients'

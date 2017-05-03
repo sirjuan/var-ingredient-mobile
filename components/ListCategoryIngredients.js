@@ -1,7 +1,7 @@
 
 import React from 'react';
-import {View} from 'react-native'
-import { Button, Icon, Text, List, ListItem, Right } from 'native-base'
+import { View } from 'react-native'
+import { Button, Icon, Text, ListItem, Right } from 'native-base'
 
 const ListCategoryIngredients = (props) => {
   const { userIngredients, ingredients, add, remove } = props

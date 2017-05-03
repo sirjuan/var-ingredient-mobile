@@ -5,8 +5,8 @@ export const RECEIVE_SUBMIT = 'RECEIVE_SUBMIT'
 export const TAKE_PICTURE = 'TAKE_PICTURE'
 
 export const pictureTaken = uri => ({ type: TAKE_PICTURE, uri })
-export const requestSubmit = recipe => ({ type: REQUEST_SUBMIT, recipe })
-export const confirmSubmit = (recipe, json) => ({ type: RECEIVE_SUBMIT, recipe })
+const requestSubmit = recipe => ({ type: REQUEST_SUBMIT, recipe })
+const confirmSubmit = (recipe, json) => ({ type: RECEIVE_SUBMIT, recipe })
 
 export const submitRecipe = () => (dispatch, getState) => {
   dispatch(requestSubmit())

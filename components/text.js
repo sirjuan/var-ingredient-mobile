@@ -1,42 +1,25 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-export const MyText = ({children, style, ...props}) => {
-  return (
-    <Text {...props} style={[styles.default, style]} >
-      {children}
-    </Text>
-  );
-}
-export const DangerText = ({children, style, ...props}) => {
-  return (
-    <Text {...props} style={[styles.danger, style]} >
-      {children}
-    </Text>
-  );
-}
+export const MyText = ({children, style, ...props}) => (
+  <Text {...props} style={[styles.default, style]}>{children}</Text>
+)
 
-export const H1 = ({children, style, ...props}) => {
-  return (
-    <Text {...props} style={[styles.default, styles.h1, style]} >
-      {children}
-    </Text>
-  );
-}
-export const H2 = ({children, style, ...props}) => {
-  return (
-    <Text {...props} style={[styles.default, styles.h2, style]} >
-      {children}
-    </Text>
-  );
-}
-export const H3 = ({children, style, ...props}) => {
-  return (
-    <Text {...props} style={[styles.default, styles.h3, style]} >
-      {children}
-    </Text>
-  );
-}
+export const DangerText = ({children, style, ...props}) => (
+  <Text {...props} style={[styles.danger, style]}>{children}</Text>
+)
+
+export const H1 = ({children, style, ...props}) => (
+  <Text {...props} style={[styles.default, styles.h1, style]}>{children}</Text>
+)
+
+export const H2 = ({children, style, ...props}) => (
+  <Text {...props} style={[styles.default, styles.h2, style]}>{children}</Text>
+)
+
+export const H3 = ({children, style, ...props}) => (
+  <Text {...props} style={[styles.default, styles.h3, style]}>{children}</Text>
+)
 
 export const styles = StyleSheet.create({
   default: {
@@ -57,5 +40,4 @@ export const styles = StyleSheet.create({
   searchBox: {
     backgroundColor: 'rgba(255,255,255,0.8)',
   },
-
 });

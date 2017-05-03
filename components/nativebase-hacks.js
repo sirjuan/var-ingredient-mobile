@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Button, Container, Content, Footer, FooterTab, Picker, Input, Item, Label } from 'native-base'
+import { View, StyleSheet } from 'react-native';
+import { Container, Content, Picker, Input, Item, Label } from 'native-base'
 
 export const DarkContainer = ({children, iStyle, ...props}) => {
   const containerStyle = {
@@ -25,25 +25,18 @@ export const MyContent = ({children, style, ...props}) => {
     </Content>
   );
 }
-export const MyPicker = ({children, style, ...props}) => {
-  return (
-<View style={{backgroundColor: 'rgba(50,50,50,0.5)', margin: 2,}}>
-  <Picker {...props} style={{color: 'white',}} >
-    {children}
-  </Picker>
+export const MyPicker = ({children, style, ...props}) => (
+  <View style={{backgroundColor: 'rgba(50,50,50,0.5)', margin: 2,}}>
+    <Picker {...props} style={{color: 'white',}} >
+      {children}
+    </Picker>
+  </View>
+);
 
-</View>
-
-  );
-}
 
 export const MyInput = ({children, inputStyle, ...props}) => {
-  const componentStyle = {
-
-      ...inputStyle,
-  }
-  console.log(componentStyle)
-  const {label, error, touched} = props
+  const componentStyle = { ...inputStyle }
+  const { label, error, touched } = props
   return (
     <Item floatingLabel last style={componentStyle}>
         {touched && error
@@ -53,11 +46,6 @@ export const MyInput = ({children, inputStyle, ...props}) => {
           {children}
         </Input>
     </Item>
-
-
-
-
-
   );
 }
 

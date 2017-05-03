@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button, Input, Item, Header, Icon, Text, Right } from 'native-base'
+import { Button, Item, Header, Icon, Text, Right } from 'native-base'
 
 const SearchBarIngredients = (props) => (
   <Header searchBar rounded style={{backgroundColor: 'rgba(30,30,30,1)',}}>
@@ -18,6 +18,5 @@ const SearchBarIngredients = (props) => (
     </Item>
   </Header>
 )
-
 
 export default SearchBarIngredients

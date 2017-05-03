@@ -1,10 +1,10 @@
 
 import React from 'react';
-import {View} from 'react-native'
+import { View } from 'react-native'
 import { Button, Icon, Text, List, ListItem, Right } from 'native-base'
-import ListCategoryIngredients from './ListCategoryIngredients'
 import { connect } from 'react-redux'
-import {fetchIngredientsByCategory, toggleCategory} from '../actions/ingredients'
+import { fetchIngredientsByCategory, toggleCategory } from '../actions/ingredients'
+import ListCategoryIngredients from './ListCategoryIngredients'
 
 const ListCategories = (props) => {
   const { userIngredients, categories, add, remove, ingredientsByCategory, dispatch } = props

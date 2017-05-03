@@ -32,7 +32,7 @@ const RecipeModal = (props) => {
           </Content>
         </Modal>}
       </View>
-    );
+    )
   }
 
   const mapStateToProps = state => {

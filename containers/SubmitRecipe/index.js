@@ -1,13 +1,12 @@
 import   React from 'react'
 import   Expo from 'expo';
 import { Field, FieldArray, reduxForm } from 'redux-form'
-import   styles from '../../styles/styles';
-import { View, Image, Text } from 'react-native';
-import { sendSubmit, pictureTaken, submitRecipe} from '../../actions/submit'
+import { View, Image } from 'react-native';
+import { pictureTaken, submitRecipe} from '../../actions/submit'
 import { connect } from 'react-redux'
-import { Button, Container, Content, Footer, FooterTab, Grid, Col,  Spinner } from 'native-base'
+import { Button, Footer, FooterTab, Grid, Col,  Spinner } from 'native-base'
 import   CameraButtons from '../../components/CameraButtons'
-import { renderInput, renderInstructions, renderIngredients, renderNumberPicker, renderIngredientPicker } from './formRenderers'
+import { renderInput, renderInstructions, renderIngredients, renderNumberPicker } from './formRenderers'
 import { MyText, H3, H2} from '../../components/text'
 import { DarkContainer, MyContent} from '../../components/nativebase-hacks'
 import validate from './validate'

@@ -4,8 +4,7 @@ import { status, ingredientsByCategory } from './ingredients'
 import { appNav, loginNav} from './nav'
 import submit from './submit'
 import session from './session'
-import {recipeReducer} from './recipes'
-import submitRecipe from './submit'
+import recipeReducer from './recipes'
 
 const rootReducer = combineReducers({
   appNav,

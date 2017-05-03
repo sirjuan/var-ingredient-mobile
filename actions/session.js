@@ -17,7 +17,7 @@ export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
 export const addIngredient = ingredient => ({ type: ADD_INGREDIENT, ingredient })
 export const removeIngredient = ingredient => ({ type: REMOVE_INGREDIENT, ingredient })
 export const logout = () => ({ type: LOG_OUT })
-export const doLogin = user => ({ type: LOG_IN, user })
+const doLogin = user => ({ type: LOG_IN, user })
 const userIngredients = (ingredients) => ({ type: USER_INGREDIENTS, ingredients })
 const loggingIn = () => ({ type: LOGGING })
 const loginFail = () => ({ type: LOGIN_FAIL })
@@ -31,7 +31,7 @@ export const userSignup = () => (dispatch, getState) => {
   const { email, password } = getState().form.login.values
   const url = host_url + '/api/user/v2'
   axios.post(url, { email: email, password: password })
-    .then((response) => dispatch(signedUp()))
+    .then(() => dispatch(signedUp()))
     .catch((error) => console.log(error));
 }
 
@@ -43,7 +43,7 @@ export const userLogin = () => (dispatch, getState) => {
     .then((response) => dispatch(startUp(response.data.user)))
     .then(() => dispatch(_setToken()))
     .catch((error) => {
-      console.log('userLogin error: ' + error.message)
+      console.log('Login error: ' + error.message)
       dispatch(loginFail())
     })
 }
@@ -51,15 +51,11 @@ export const userLogin = () => (dispatch, getState) => {
 export const fLogin = (id) => (dispatch, getState) => {
   dispatch(loggingIn())
   const url = host_url + '/auth/facebook/login'
-  console.log(url)
   axios.post(url, { id: id })
-    .then((response) => {
-      console.log(response)
-      dispatch(startUp(response.data.user))
-    })
+    .then((response) => dispatch(startUp(response.data.user)))
     .then(() => dispatch(_setToken()))
     .catch((error) => {
-      console.log('userLogin error: ' + error.message)
+      console.log('Facebook Login Error: ' + error.message)
       dispatch(loginFail())
     })
 }
@@ -81,12 +77,10 @@ export const postUserIngredient = (ingredient) => (dispatch, getState) => {
     data: ingredient,
     header
   }
-  axios(options)
-    .then(response => console.log(response))
-    .catch(error => {
-      dispatch(removeIngredient(ingredient))
-      console.log(error.message)
-    })
+  axios(options).catch(error => {
+    dispatch(removeIngredient(ingredient))
+    console.log(error.message)
+  })
 }
 
 export const removeUserIngredient = (ingredient) => (dispatch, getState) => {
@@ -97,13 +91,10 @@ export const removeUserIngredient = (ingredient) => (dispatch, getState) => {
     url: host_url + '/api/user/' + getState().session._id + '/ingredient/' + ingredient._id,
     header
   }
-  console.log(options)
-  axios(options)
-  .then(response => console.log(response))
-    .catch(error => {
-      dispatch(addIngredient(ingredient))
-      console.log(error.message)
-    })
+  axios(options).catch(error => {
+    dispatch(addIngredient(ingredient))
+    console.log(error.message)
+  })
 }
 
 export const getUserIngredients = () => (dispatch, getState) => {
@@ -127,10 +118,7 @@ const _removetoken = async () => {
 }
 
 const _setToken = () => (dispatch, getState) => {
-    const user = getState().session
-  try {
-     AsyncStorage.setItem('credentials', JSON.stringify(user));
-  } catch (error) {
-    console.log(error.message)
-  }
+  const user = getState().session
+  try { AsyncStorage.setItem('credentials', JSON.stringify(user)) }
+  catch (error) { console.log(error.message) }
 }

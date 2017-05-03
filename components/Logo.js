@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
-import styles from '../styles/styles';
+import { View, Image } from 'react-native';
 
 const Logo = () => (
-  <View style={styles.inputPassive}>
+  <View style={{height: 300, paddingTop: 0, alignItems: 'center'}}>
       <Image
         source={require('../assets/logo.png')}
         resizeMode={Image.resizeMode.contain}

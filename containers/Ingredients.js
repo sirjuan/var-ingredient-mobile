@@ -4,8 +4,7 @@ import { Container, Content } from 'native-base'
 // Import redux stuff
 import { connect } from 'react-redux'
 import { toggleSearch, fetchRecipes } from '../actions/ingredients'
-
-import { addIngredient, removeUserIngredient, postUserIngredient } from '../actions/session'
+import { removeUserIngredient, postUserIngredient } from '../actions/session'
 // Import components
 import Logo from '../components/Logo'
 import RecipeList from '../components/RecipeList'

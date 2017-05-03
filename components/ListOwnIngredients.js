@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Item, Text } from 'native-base'
+import { Text } from 'native-base'
 
 const style = {
   justifyContent: 'center',

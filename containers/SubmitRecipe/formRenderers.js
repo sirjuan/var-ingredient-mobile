@@ -1,10 +1,10 @@
 
 import   React from 'react';
 import { View } from 'react-native';
-import { Input, Icon, Button, InputGroup, List, ListItem, Left, Right, Body, Item } from 'native-base'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import { MyText, H1, DangerText} from '../../components/text'
-import { DarkContainer, MyContent, MyPicker, MyInput } from '../../components/nativebase-hacks'
+import { Icon, Button, InputGroup, List, ListItem, Left, Right, Body, Item } from 'native-base'
+import { Field, reduxForm } from 'redux-form'
+import { MyText } from '../../components/text'
+import { MyPicker, MyInput } from '../../components/nativebase-hacks'
 
  export const renderInput = ({ input, label, meta: { touched, error }, ...custom }) => (
    <View>

@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { } from 'react-native';
-import { Picker, Item, Text } from 'native-base'
+import { Picker, Item } from 'native-base'
 
 export const renderIngredientPicker = ({ input, label, meta: { touched, error }, children, ...custom }) => (
 

@@ -5,14 +5,12 @@ import { showModal } from '../../actions/modal'
 
 const Recipe = (props) => {
 
-  const { recipe, dispatch, navigation } = props
+  const { recipe, dispatch } = props
   const src = 'http://res.cloudinary.com/dicyn7jds/image/upload/' + recipe.image.versionId + '/' + recipe.image._id + '.' + recipe.image.imageType
 
   const _toggleVisible = () => dispatch(showModal(recipe))
 
   return (
-
-
     <ListItem onPress={_toggleVisible}>
         <Thumbnail square size={80} source={{uri: src}} />
         <Body>
